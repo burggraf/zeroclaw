@@ -25,7 +25,7 @@ Fast, small, and fully autonomous AI assistant infrastructure — deploy anywher
 - 🏎️ **Ultra-Lightweight:** <5MB Memory footprint — 99% smaller than OpenClaw core.
 - 💰 **Minimal Cost:** Efficient enough to run on $10 Hardware — 98% cheaper than a Mac mini.
 - ⚡ **Lightning Fast:** 400X Faster startup time, boot in <10ms (under 1s even on 0.6GHz cores).
-- 🌍 **True Portability:** Single self-contained binary across ARM, x86, and RISC-V.
+- 🌍 **True Portability:** Single self-contained binary across ARM, x86, and RISC-V. Now providing optimized **Alpine Linux releases** for both **ARM** and **x64** architectures.
 
 ### Why teams pick ZeroClaw
 
