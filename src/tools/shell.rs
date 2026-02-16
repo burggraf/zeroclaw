@@ -127,19 +127,11 @@ impl Tool for ShellTool {
 
                 // Truncate output to prevent OOM
                 if stdout.len() > MAX_OUTPUT_BYTES {
-                    let mut idx = MAX_OUTPUT_BYTES;
-                    while idx > 0 && !stdout.is_char_boundary(idx) {
-                        idx -= 1;
-                    }
-                    stdout.truncate(idx);
+                    stdout.truncate(crate::util::floor_char_boundary(&stdout, MAX_OUTPUT_BYTES));
                     stdout.push_str("\n... [output truncated at 1MB]");
                 }
                 if stderr.len() > MAX_OUTPUT_BYTES {
-                    let mut idx = MAX_OUTPUT_BYTES;
-                    while idx > 0 && !stderr.is_char_boundary(idx) {
-                        idx -= 1;
-                    }
-                    stderr.truncate(idx);
+                    stderr.truncate(crate::util::floor_char_boundary(&stderr, MAX_OUTPUT_BYTES));
                     stderr.push_str("\n... [stderr truncated at 1MB]");
                 }
 

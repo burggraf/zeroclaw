@@ -328,11 +328,11 @@ fn date_prefix(filename: &str) -> Option<NaiveDate> {
     if filename.len() < 10 {
         return None;
     }
-    let mut idx = 10;
-    while idx > 0 && !filename.is_char_boundary(idx) {
-        idx -= 1;
-    }
-    NaiveDate::parse_from_str(&filename[..idx], "%Y-%m-%d").ok()
+    NaiveDate::parse_from_str(
+        &filename[..crate::util::floor_char_boundary(filename, 10)],
+        "%Y-%m-%d",
+    )
+    .ok()
 }
 
 fn is_older_than(path: &Path, cutoff: SystemTime) -> bool {

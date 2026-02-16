@@ -43,6 +43,21 @@ pub fn truncate_with_ellipsis(s: &str, max_chars: usize) -> String {
     }
 }
 
+/// Safely find the largest byte index less than or equal to `index` that is a character boundary.
+///
+/// This is a stable replacement for the unstable `str::floor_char_boundary` feature.
+pub fn floor_char_boundary(s: &str, index: usize) -> usize {
+    if index >= s.len() {
+        s.len()
+    } else {
+        let mut i = index;
+        while i > 0 && !s.is_char_boundary(i) {
+            i -= 1;
+        }
+        i
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -134,5 +149,25 @@ mod tests {
     fn test_truncate_zero_max_chars() {
         // Edge case: max_chars = 0
         assert_eq!(truncate_with_ellipsis("hello", 0), "...");
+    }
+
+    #[test]
+    fn test_floor_char_boundary() {
+        let s = "aé你好🦀";
+        // index 0: boundary
+        assert_eq!(floor_char_boundary(s, 0), 0);
+        // index 1: boundary (after 'a')
+        assert_eq!(floor_char_boundary(s, 1), 1);
+        // index 2: middle of 'é' (2 bytes: 1, 2)
+        assert_eq!(floor_char_boundary(s, 2), 1);
+        // index 3: boundary (after 'é')
+        assert_eq!(floor_char_boundary(s, 3), 3);
+        // index 4: middle of '你' (3 bytes: 3, 4, 5)
+        assert_eq!(floor_char_boundary(s, 4), 3);
+        assert_eq!(floor_char_boundary(s, 5), 3);
+        // index 6: boundary (after '你')
+        assert_eq!(floor_char_boundary(s, 6), 6);
+        // index 100: past end
+        assert_eq!(floor_char_boundary(s, 100), s.len());
     }
 }
