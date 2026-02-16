@@ -142,6 +142,7 @@ Every subsystem is a **trait** — swap implementations with a config change, ze
 
 - ✅ Supported today: `runtime.kind = "native"` or `runtime.kind = "docker"`
 - 🚧 Planned, not implemented yet: WASM / edge runtimes
+- 🐧 **Custom Support:** Modified for compatibility with Alpine Linux on ARM architectures.
 
 When an unsupported `runtime.kind` is configured, ZeroClaw now exits with a clear error instead of silently falling back to native.
 
