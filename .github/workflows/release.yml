@@ -68,6 +68,10 @@ jobs:
 
       - uses: Swatinem/rust-cache@v2
 
+      - name: Install MUSL components
+        if: contains(matrix.target, 'musl')
+        run: rustup target add ${{ matrix.target }}
+
       - name: Install cross
         if: matrix.use_cross
         run: |
